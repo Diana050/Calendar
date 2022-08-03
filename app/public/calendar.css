@@ -1,0 +1,253 @@
+* {
+    color: rgb(0, 0, 102);
+    font-family: -moz-fixed;
+}
+
+.box {
+    /*padding-top: -10px;*/
+    border-color: black;
+    border-width: 5px;
+    text-align: center;
+
+}
+
+.month-box {
+    background-color: rgb(204, 204, 255);
+    /*padding-bottom: 3%;*/
+    /*padding-top: 3%;*/
+    width: 100%;
+    height: 15vh;
+    text-align: left;
+    border-bottom: 3px solid silver;
+    display: flex;
+
+}
+
+.month {
+    text-align: left;
+    padding-top: 2vh;
+    margin: 0;
+}
+
+.people-box {
+    background-color: rgb(242, 242, 242);
+    width: 25%;
+    height: 100vh;
+
+}
+
+.container {
+    display: flex;
+}
+
+.calendar-box {
+    background-color: rgb(242, 242, 242);
+    width: 100%;
+    height:82.5vh;
+}
+
+ul {
+    list-style-type: none;
+    width: 75vw;
+    margin-top: -0.04%;
+    margin-left: -2%;
+
+}
+
+li {
+    width: 75vw;
+
+}
+
+.vl {
+    border-left: 3px solid silver;
+    height: 97.5vh;
+}
+
+h1 {
+    font-size: 100px;
+    color: rgb(0, 0, 102);
+    font-family: -moz-fixed;
+    font-weight: bold;
+    /*padding-bottom: 1vh;*/
+    padding-left: 4%;
+}
+
+p {
+    color: rgb(0, 0, 102);
+    font-family: -moz-fixed;
+    font-size: 25px;
+}
+
+
+table {
+    padding-top: 5%;
+    padding-left: 6%;
+    border: none;
+
+}
+
+
+td {
+    height: 8vh;
+    width: 8.5vw;
+    border: none;
+    background-color: rgb(230, 230, 255);
+
+}
+
+td:hover {
+    background-color: rgb(153, 153, 255);
+}
+
+.empty {
+    background-color: rgb(242, 242, 242);
+}
+
+th {
+    border: none;
+    background-color: rgb(242, 242, 242);
+    padding-bottom: 2%;
+}
+.ul-people {
+    width: 10vw;
+}
+
+.li-people {
+    width: 10vw;
+    margin-left: -20%;
+}
+.img-profile {
+    width: 9vw;
+    border: 3px solid black;
+    border-radius: 50%;
+    margin-left: 9vw;
+    margin-bottom: 4vh;
+    margin-top: 2vh;
+
+}
+
+.people-names {
+    font-size: x-large;
+    padding-left: 10vw;
+    padding-bottom: 5vh;
+}
+
+p.people-text {
+    text-align: center;
+    padding-left: 2vw;
+    font-size: 30px;
+    text-transform: capitalize;
+    font-weight: bold;
+    margin: auto;
+    justify-content: center;
+}
+
+.dissappear{
+    padding-left:2vw;
+}
+
+.arrows{
+
+    display: flex;
+    padding-left: 1%;
+    padding-top: -1%;
+    margin: 0;
+}
+.arrowL {
+    font-size: 100px;
+    font-weight: bold;
+    margin: 0;
+    padding-top:  2vh;
+
+}
+
+
+.arrowR{
+    font-size: 100px;
+    font-weight: bold;
+    padding-left: 20%;
+    margin: 0;
+    padding-top: 2vh;
+}
+
+.day{}
+
+.log{
+    text-align: center;
+    font-size: x-large;
+}
+
+.containerLog{
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+    background-color: rgb(242, 242, 242);
+    color: rgb(0, 0, 102);
+    padding: 10px 5px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    /*position: fixed;*/
+    /*bottom: 23px;*/
+    width: 160px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+    display: none;
+    position: fixed;
+    border: 3px solid #f1f1f1;
+    z-index: 9;
+    right: 3.5vw;
+}
+
+/* Add styles to the form container */
+.form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+    background-color: #707fc4;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom:10px;
+    opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+    background-color: #707fc4;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+    opacity: 1;
+}
