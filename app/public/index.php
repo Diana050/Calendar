@@ -23,22 +23,6 @@ if (isset($_POST['mail']) && isset($_POST['psw'])) {
 
 }
 
-if(isset($_GET['date'])){
-    $date=$_GET['date'];
-
-    // $queryExecuteUserList="SELECT user_id FROM appointment WHERE date='" . $date . "'";
-    $queryExecuteUserList="SELECT users.userName FROM users RIGHT JOIN appointment ON users.id = appointment.user_id WHERE date='" . $date . "'";
-
-    $resultUserList = $pdo->query($queryExecuteUserList);
-    $resultUserList->setFetchMode(PDO::FETCH_ASSOC);
-    while ($row = $resultUserList->fetch()) {
-
-        echo $row['userName'];
-    }
-
-
-}
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -197,19 +181,19 @@ if(isset($_GET['date'])){
                 <input id="dateApt" type="date" placeholder="Enter Date" name="date" min="2020-08-03" value="2021-08-03"
                        required>
 
-                <button type="submit"  name="submitapt" class="btn" value="submit">Create appointment</button>
+                <button type="submit" name="submitapt" class="btn" value="submit">Create appointment</button>
                 <button type="button" class="btn cancel" onclick="closeFormA()">Close</button>
             </form>
         </div>
 
-<!--        //$date = $_GET['ala din url'];-->
+        <!--        //$date = $_GET['ala din url'];-->
         <p class="people-text" id="people-text">
             <?php
             $test = $_SESSION['name'] ?? false;
-            if ($test!==false){
-                echo '<p>Hi! ' . $test . '</p>';
+            if ($test !== false) {
+                echo '<p class="userText">Hi! ' . $test . '</p>';
             } else {
-                echo "<p id='userText'>Hi! Stranger</p>";
+                echo "<p id='userText' class='userText'>Hi! Stranger</p>";
             }
             ?>
         </p>
@@ -217,20 +201,35 @@ if(isset($_GET['date'])){
         <button id="logout" name="logout" value="logout"><a href="logout.php"> LogOut</a></button>
         <p id="dissappear" class="dissappear">there is no schedule fo today</p>
 
+        <?php
+        if (isset($_GET['date'])) {
+            $date = $_GET['date'];
+            $pdo = new PDO('mysql:dbname=tutorial;host=mysql', 'tutorial', 'secret', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            // $queryExecuteUserList="SELECT user_id FROM appointment WHERE date='" . $date . "'";
+            $queryExecuteUserList = "SELECT users.userName FROM users RIGHT JOIN appointment ON users.id = appointment.user_id WHERE date='" . $date . "'";
 
-            <form  class="invisible" method="GET">
-            <input type="text"   id="getDateForm" name="date" ">
-            <button type="submit"  id="getBtnForm" value="submit" "></button>
-             </form>
+            $resultUserList = $pdo->query($queryExecuteUserList);
+            $resultUserList->setFetchMode(PDO::FETCH_ASSOC);
+            while ($row = $resultUserList->fetch()) {
+
+                echo `<p>` . $row['userName'] . `</p>`;
+            }
+        }
+        ?>
+        <form class="invisible" method="GET">
+            <input type="text" id="getDateForm" name="date" ">
+            <button type="submit" id="getBtnForm" value="submit"
+            "></button>
+        </form>
 
 
-<!--        <ul class="ul-people dissappear">-->
-<!---->
-<!--            <li class="li-people"><img src="img/office1.png" class="img-profile">-->
-<!--                <p class="people-names">Diana B.</p></li>-->
-<!--            <li class="li-people"><img src="img/office2.png" class="img-profile">-->
-<!--                <p class="people-names">Diana B.</p></li>-->
-<!--        </ul>-->
+        <!--        <ul class="ul-people dissappear">-->
+        <!---->
+        <!--            <li class="li-people"><img src="img/office1.png" class="img-profile">-->
+        <!--                <p class="people-names">Diana B.</p></li>-->
+        <!--            <li class="li-people"><img src="img/office2.png" class="img-profile">-->
+        <!--                <p class="people-names">Diana B.</p></li>-->
+        <!--        </ul>-->
     </div>
 </div>
 
@@ -239,8 +238,6 @@ if(isset($_GET['date'])){
 
 
 <?php
-
-
 
 
 //session_start();
@@ -258,8 +255,6 @@ if(isset($_GET['date'])){
 //    echo '</tr>';
 //}
 //echo '</table>';
-
-
 
 
 if (isset($_POST['submit'])) {

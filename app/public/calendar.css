@@ -144,7 +144,7 @@ p.people-text {
 }
 
 .dissappear{
-    padding-left:2vw;
+    word-break: break-word;
 }
 
 .arrows{

@@ -29,9 +29,16 @@ const daysEls = document.querySelectorAll(".day");
 
 let link = new  URL(window.location.href);
 let dateFromUrl = link.searchParams.get('date');
+
 if (dateFromUrl!==null){
     dateArray = dateFromUrl.split('-');
     document.getElementById("dissappear").innerText = "Schedule for " + '\n' + toMonthName(dateArray[1]-1) +" "+dateArray[2]+" "+ dateArray[0];
+    console.log(moment().month(dateArray[1]-1).format("MMMM"));
+    document.getElementById("month").innerText = `${moment().month(dateArray[1]-1).format("MMMM")} ${dateArray[0]}`;
+}
+else
+{
+    ///baga ziua curenta cu moment
 }
 
 let newDate;
@@ -39,7 +46,8 @@ daysEls.forEach(day => {
     day.addEventListener("click",function (){
         let date = day.dataset.date;
         document.getElementById("dissappear").innerText = "Schedule for " + '\n' + date + " " + currentYear;
-        let x = document.getElementById("dissappear").innerText.slice(13, 27);
+        let x = document.getElementById("dissappear");
+        x = x.innerText.slice(13, x.innerText.length);
         x = x.split(" ");
         newDate = x[2] + "-" + moment(x[0],"MMMM").format("MM") + "-" + moment(x[1],"D").format("DD");
         submitGETform(newDate);
@@ -181,7 +189,6 @@ arrowL.addEventListener("click", previousmonth);
 let dateAptElement = document.getElementById("dateApt");
 dateAptElement.min = moment().format("YYYY-MM-DD");
 dateAptElement.value = moment().format("YYYY-MM-DD");
-
 
 if (document.getElementById("userText").innerText === "Hi! Stranger") {
     document.getElementById("submitapt").style.display = "none";
