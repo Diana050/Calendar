@@ -251,3 +251,8 @@ p.people-text {
 .form-container .btn:hover, .open-button:hover {
     opacity: 1;
 }
+
+
+.invisible{
+    display: none;
+}
