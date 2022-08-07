@@ -166,6 +166,9 @@ if (isset($_POST['mail']) && isset($_POST['psw'])) {
                 <label for="psw"><b>Password</b></label>
                 <input type="password" placeholder="Enter Password" name="password" required>
 
+                <label for="pswRe"><b>Retype Password</b></label>
+                <input type="password" placeholder="Re-Enter Password" name="passwordRe" required>
+
                 <button type="submit" name="submit" class="btn" value="submit">Signin</button>
                 <button type="button" class="btn cancel" onclick="closeFormS()">Close</button>
             </form>
@@ -263,33 +266,51 @@ if (isset($_POST['submit'])) {
     $userName = $_POST['userName'];
     $mailAddress = $_POST['mailAddress'];
     $password = $_POST['password'];
+    $passwordRe = $_POST['passwordRe'];
 
-    $inst = "INSERT INTO users(firstName, lastName, userName,mailAddress,password)
+
+    $query = $pdo->prepare("SELECT * FROM users WHERE mailAddress=:mailAddress");
+    $query->bindParam("mailAddress", $mailAddress, PDO::PARAM_STR);
+    $query->execute();
+
+    if ($query->rowCount() > 0) {
+        echo '<p class="error">The email address is already registered!</p>';
+    }
+
+    if ($password!=$passwordRe){
+        echo  '<p class="error">The passwords does not match!</p>';
+    }else{
+
+
+
+    if ($query->rowCount() == 0) {
+        $inst = "INSERT INTO users(firstName, lastName, userName,mailAddress,password)
 VALUES (:firstName,:lastName,:userName,:mailAddress,:password)";
 
-    $queryRun = $pdo->prepare($inst);
+        $queryRun = $pdo->prepare($inst);
 
-    $data = [
-        ':firstName' => $firstName,
-        'lastName' => $lastName,
-        ':userName' => $userName,
-        ':mailAddress' => $mailAddress,
-        ':password' => $password,
+        $data = [
+            ':firstName' => $firstName,
+            'lastName' => $lastName,
+            ':userName' => $userName,
+            ':mailAddress' => $mailAddress,
+            ':password' => $password,
 
-    ];
+        ];
 
-    $queryExecute = $queryRun->execute($data);
+        $queryExecute = $queryRun->execute($data);
 
 
-    if ($queryExecute) {
-        {
-            echo "Inserted Successfully";
+        if ($queryExecute) {
+            {
+                echo "Inserted Successfully";
+            }
+        } else {
+            echo "Not Inserted";
         }
-    } else {
-        echo "Not Inserted";
     }
 }
-
+  }
 
 if (isset($_POST['submitapt'])) {
     $user_id = $_POST['user_id'];
@@ -313,13 +334,11 @@ VALUES (:user_id,:date)";
     if ($queryExecuteapt) {
         {
             echo "Inserted Successfully";
-            //header('Location: index.php');
-            exit(0);
+
         }
     } else {
         echo "Not Inserted";
-        //header('Location: php.php');
-        exit(0);
+
     }
 }
 ?>

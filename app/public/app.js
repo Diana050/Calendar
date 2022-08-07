@@ -26,18 +26,22 @@ function closeFormA() {
 
 
 const daysEls = document.querySelectorAll(".day");
-
+let dateArray = [];
 let link = new  URL(window.location.href);
 let dateFromUrl = link.searchParams.get('date');
+console.log(dateFromUrl)
 
 if (dateFromUrl!==null){
     dateArray = dateFromUrl.split('-');
-    document.getElementById("dissappear").innerText = "Schedule for " + '\n' + toMonthName(dateArray[1]-1) +" "+dateArray[2]+" "+ dateArray[0];
+    document.getElementById("dissappear").innerText = "Schedule for " + '\n' + toMonthName(dateArray[1]) +" "+dateArray[2]+" "+ dateArray[0];
     console.log(moment().month(dateArray[1]-1).format("MMMM"));
     document.getElementById("month").innerText = `${moment().month(dateArray[1]-1).format("MMMM")} ${dateArray[0]}`;
 }
 else
 {
+    dateArray[1] = moment().month()+1;
+    document.getElementById("month").innerHTML = toMonthName(moment().month()+1) + " " + moment().year();
+    window.location.href += "?date="+moment().year()+"-"+dateArray[1]+"-"+moment().day();
     ///baga ziua curenta cu moment
 }
 
@@ -50,6 +54,7 @@ daysEls.forEach(day => {
         x = x.innerText.slice(13, x.innerText.length);
         x = x.split(" ");
         newDate = x[2] + "-" + moment(x[0],"MMMM").format("MM") + "-" + moment(x[1],"D").format("DD");
+        localStorage.setItem('test', x[0]);
         submitGETform(newDate);
     });
 })
@@ -66,13 +71,14 @@ function thisMonth() {
         cell.removeAttribute("data-date");
         cell.innerHTML = "";
 
-        let startingDayOfNextMonth = moment().year(currentYear).month(toMonthName(currentMonth)).startOf("month").day()
-        let numberOfDaysInNextMonth = moment().year(currentYear).month(currentMonth).daysInMonth();
+        let startingDayOfNextMonth = moment().year(currentYear).month(toMonthName(dateArray[1])).startOf("month").day()
+        let numberOfDaysInNextMonth = moment().year(currentYear).month(dateArray[1]).daysInMonth();
 
         if (counter >= startingDayOfNextMonth && dayCode <= numberOfDaysInNextMonth) {
             cell.classList.add("day");
             cell.innerHTML = dayCode;
-            cell.setAttribute("data-date", toMonthName(currentMonth) + " " + dayCode);
+            cell.setAttribute("data-date", toMonthName(dateArray[1]) + " " + dayCode);
+            localStorage.setItem('aaaaaaaa',currentMonth);
             dayCode++;
         } else {
             //cell.classList.add("hidden");
@@ -87,12 +93,7 @@ let initialized = 0;
 
 
 function toMonthName(monthNumber) {
-    const date = new Date();
-    date.setMonth(monthNumber);
-
-    return date.toLocaleString([], {
-        month: 'long',
-    });
+    return moment(monthNumber, 'M').format('MMMM');
 }
 
 const arrowR = document.getElementById("arrowR");
@@ -100,15 +101,14 @@ const arrowL = document.getElementById("arrowL");
 
 
 let currentYear = moment().year();
-let currentMonth = moment().month();
-let emptyDaysElement = document.querySelectorAll('.day')
+let currentMonth = moment().month()+1;
+let emptyDaysElement = document.querySelectorAll('.day');
 
-document.getElementById("month").innerHTML = toMonthName(currentMonth) + " " + currentYear;
 
 
 function nextmonth() {
 
-    if (currentMonth > 10) {
+    if (currentMonth > 11) {
         currentMonth -= 11;
         currentYear++;
         document.getElementById("month").innerHTML = toMonthName(currentMonth) + " " + currentYear;
@@ -143,7 +143,7 @@ function nextmonth() {
 
 function previousmonth() {
 
-    if (currentMonth < 1) {
+    if (currentMonth < 2) {
         currentMonth += 11;
         currentYear--;
         document.getElementById("month").innerHTML = toMonthName(currentMonth) + " " + currentYear;
